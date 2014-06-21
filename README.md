@@ -1,9 +1,9 @@
 wildSoup
 ========
 how to use:<br>
-python wildSoup.py -a www.reddit.com/r/gonewild -u yourRedditUsername -p yourRedditPassword
+<b>python wildSoup.py -a www.reddit.com/r/gonewild -u yourRedditUsername -p yourRedditPassword</b>
 
-requiers modules: 
-                  json, argparse, requests, BeautifulSoup
+requiers modules: <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;json, argparse, requests, BeautifulSoup
                   
 Why create a script to download amature nudes form reddit? Because I can!
