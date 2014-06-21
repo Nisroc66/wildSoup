@@ -45,6 +45,10 @@ def getTitles(html, imgur=False):
 def dlImage(url):
 	path = "%s/img/" % os.getcwd()
 	fname = url.split('/')
+	if fname[-1].endswith('?1'):
+		fname[-1] = fname[-1].strip('?1')
+		print fname[-1]
+
 	with open('%s%s' % (path, fname[-1]), 'wb') as file:
 		response = requests.get('%s' % url, stream=True)
 
