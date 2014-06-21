@@ -1,43 +1,23 @@
+#!/usr/bin/env python
+
 import os; import sys;
 
 """ import rquiered modules"""
 try:
 	import json
-except ImportError:
-	print "Python module json was not found."
-	print "HOWTO install: pip install json"
-	sys.exit(-1)
-
-try:
 	import argparse
-except ImportError:
-	print "Python module argparse was not found."
-	print "HOWTO install: pip install argparse"
-	sys.exit(-1)
-
-try:
 	import requests
-except ImportError:
-	print "Python module requests was not found."
-	print "HOWTO install: pip install requests"
-	sys.exit(-1)
-
-try:
 	from BeautifulSoup import BeautifulSoup
-except ImportError:
-	print "Python module BeautifulSoup was not found."
-	print "HOWTO install: pip install BeautifulSoup"
+except ImportError as ie:
+	print(str(ie))
 	sys.exit(-1)
-
-
-
 
 def cmdArgs():
 	parser = argparse.ArgumentParser()
-	parser.add_argument('-a', help='Enter URL to Reddit Subreddit')
-	parser.add_argument('-u', help='Enter Reddit username')
-	parser.add_argument('-p', help='Enter Reddit password')
-	parser.add_argument('--version', action='version', version='%(prog)s 0.1')
+	parser.add_argument('-r',required=True,help='Subreddit name')
+	parser.add_argument('-u',required=True,help='Reddit username')
+	parser.add_argument('-p',required=True,help='Reddit password')
+	parser.add_argument('--version', action='version', version='%(prog)s 0.2')
 
 	return parser.parse_args()
 
@@ -92,44 +72,45 @@ def dlImage(url):
 
 				file.write(block)
 	except KeyboardInterrupt, IOError:
-		sys.exit("Could not download image or interupted by user.")
-
-def getFilesList():
-	fullPath = "%s/img/" % os.getcwd()
-	files = os.listdir(fullPath)
-
-	return files
+		sys.exit("Could not download image or interupted by user.i")
 
 def compareFiles(link, files):
 	for file in files:
 		if file in link:
-			return False
-	return True
+			return True
+	return False
 
 if __name__ == "__main__":
 	base = cmdArgs()
-	url = "http://%s" % base.a
-	print url
 
+	if not base.r:
+		sys.exit("-a attribute (sub name) needed.")
+	
+	url = "http://www.reddit.com/r/" + base.r
+	
 	client = login(base.u, base.p)
 	page = client.get(url)
+	
 	titles = getTitles(page.text)
-	files = getFilesList()
+	files = os.listdir(os.getcwd() + "/img/")
 
 	links = [[item.get('href').encode('utf-8'), item.getText().encode('utf-8')] for item in titles]
 
-	for link in links:
-		if compareFiles(link[0], files) == False:
-			print "File excists"
-			continue
+	part = 0 # count
+	ln = len(links) # length
+
+	for link in links: # link[0] = image url, link[1] = image title
+		part += 1
+		if compareFiles(link[0], files):
+			print("[{:2}/{:2}] File '{}' exists".format(part,ln,link[1]))
 		else:
-			if ".jpg" in link[0]:
-				print "Downloading image \"%s\" ... " % link[1]
+			if '.jpg' in link[0]:
+				print("[{:2}/{:2}] Downloading image \"{}\" ... ".format(part,ln, link[1]))
 				dlImage(link[0])
 			elif "http://imgur.com/a/" in link[0]:
 				albumHtml = requests.get(link[0])
 				album = getTitles(albumHtml.text, True)
 				albumImgs = [items.get('href') for items in album]
-				print "Downloading album \"%s\" ..." % link[1]
+				print("[{:2}/{:2}] Downloading album \"{}\" ... ".format(part,ln, link[1]))
 				for link in albumImgs:
 					dlImage("http:%s" % link)
