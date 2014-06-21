@@ -1,5 +1,36 @@
-import json; import argparse; import requests; import os;
-from BeautifulSoup import BeautifulSoup
+import os; import sys;
+
+""" import rquiered modules"""
+try:
+	import json
+except ImportError:
+	print "Python module json was not found."
+	print "HOWTO install: pip install json"
+	sys.exit(-1)
+
+try:
+	import argparse
+except ImportError:
+	print "Python module argparse was not found."
+	print "HOWTO install: pip install argparse"
+	sys.exit(-1)
+
+try:
+	import requests
+except ImportError:
+	print "Python module requests was not found."
+	print "HOWTO install: pip install requests"
+	sys.exit(-1)
+
+try:
+	from BeautifulSoup import BeautifulSoup
+except ImportError:
+	print "Python module BeautifulSoup was not found."
+	print "HOWTO install: pip install BeautifulSoup"
+	sys.exit(-1)
+
+
+
 
 def cmdArgs():
 	parser = argparse.ArgumentParser()
@@ -43,23 +74,25 @@ def getTitles(html, imgur=False):
 
 
 def dlImage(url):
-	path = "%s/img/" % os.getcwd()
-	fname = url.split('/')
-	if fname[-1].endswith('?1'):
-		fname[-1] = fname[-1].strip('?1')
-		print fname[-1]
+	try:
+		path = "%s/img/" % os.getcwd()
+		fname = url.split('/')
+		if fname[-1].endswith('?1'):
+			fname[-1] = fname[-1].strip('?1')
 
-	with open('%s%s' % (path, fname[-1]), 'wb') as file:
-		response = requests.get('%s' % url, stream=True)
+		with open('%s%s' % (path, fname[-1]), 'wb') as file:
+			response = requests.get('%s' % url, stream=True)
 
-		if not response.ok:
-			print "Could not download image."
-			return "failed!"
-		for block in response.iter_content(1024):
-			if not block:
-				break
+			if not response.ok:
+				print "Could not download image."
+				return "failed!"
+			for block in response.iter_content(1024):
+				if not block:
+					break
 
-			file.write(block)
+				file.write(block)
+	except KeyboardInterrupt, IOError:
+		sys.exit("Could not download image or interupted by user.")
 
 def getFilesList():
 	fullPath = "%s/img/" % os.getcwd()
