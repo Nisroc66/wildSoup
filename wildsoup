@@ -10,6 +10,7 @@ try:
 	from BeautifulSoup import BeautifulSoup
 except ImportError as ie:
 	print(str(ie))
+	print "To install a module: pip install moduleName"
 	sys.exit(-1)
 
 def cmdArgs():
@@ -72,7 +73,7 @@ def dlImage(url):
 
 				file.write(block)
 	except KeyboardInterrupt, IOError:
-		sys.exit("Could not download image or interupted by user.i")
+		sys.exit("Could not download image or interupted by user.")
 
 def compareFiles(link, files):
 	for file in files:
@@ -85,12 +86,12 @@ if __name__ == "__main__":
 
 	if not base.r:
 		sys.exit("-a attribute (sub name) needed.")
-	
+
 	url = "http://www.reddit.com/r/" + base.r
-	
+
 	client = login(base.u, base.p)
 	page = client.get(url)
-	
+
 	titles = getTitles(page.text)
 	files = os.listdir(os.getcwd() + "/img/")
 
