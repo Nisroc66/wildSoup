@@ -6,6 +6,7 @@ python wildsoup -r pics -u yourRedditUsername -p yourRedditPassword
 ```
 
 
+
 **Requierd modules:**
 * json
 * argparse
@@ -16,6 +17,7 @@ python wildsoup -r pics -u yourRedditUsername -p yourRedditPassword
 ```
 pip install BeautifulSoup
 ```
+
 
 
 **Notes:**<br>Only supports posts that are directly linked to *.jpg files and imgur albums.
