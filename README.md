@@ -2,7 +2,7 @@
 **How to use:**
 
 ```
-python wildsoup -a pics -u yourRedditUsername -p yourRedditPassword
+python wildsoup -r pics -u yourRedditUsername -p yourRedditPassword
 ```
 
 **Requied modules:**
