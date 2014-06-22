@@ -13,7 +13,7 @@ python wildsoup -r pics -u yourRedditUsername -p yourRedditPassword
 * requests
 * BeautifulSoup
 
-*How to install modules:*
+**How to install python modules:**
 ```
 pip install BeautifulSoup
 ```
