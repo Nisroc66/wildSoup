@@ -24,5 +24,7 @@ pip install BeautifulSoup
 'I am over eighteen years old and willing to view adult content' has to be turned on in your Reddit peferences in order for some subreddits to work.
 
 
+
+
 **Update 0.2:**
 Images will now be sorted in to folders according to sub-reddits. If you download from /r/pics/ the images will be stored in /img/pics , /r/spacedicks in /img/spacedicks/ and so on.
