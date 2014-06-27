@@ -102,7 +102,7 @@ if __name__ == "__main__":
 	if base.supp:
 		null_out = open(os.devnull, 'w')
 		sys.stdout = null_out
-		# sys.stderr = null_out
+		sys.stderr = null_out
 
 	url = "http://www.reddit.com/r/" + base.r
 
