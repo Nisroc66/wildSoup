@@ -18,6 +18,7 @@ def cmdArgs():
 	parser.add_argument('-r',required=True,help='Subreddit name')
 	parser.add_argument('-u',required=True,help='Reddit username')
 	parser.add_argument('-p',required=True,help='Reddit password')
+	parser.add_argument('-s, --suppress', dest='supp', action='store_true', required=False,help='Suppress Output')
 	parser.add_argument('--version', action='version', version='%(prog)s 0.2')
 
 	return parser.parse_args()
@@ -97,6 +98,10 @@ if __name__ == "__main__":
 
 	if not base.r:
 		sys.exit("-a attribute (sub name) needed.")
+
+	if base.supp:
+		sys.stdout = os.devnull
+		sys.stderr = os.devnull
 
 	url = "http://www.reddit.com/r/" + base.r
 
