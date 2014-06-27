@@ -100,8 +100,9 @@ if __name__ == "__main__":
 		sys.exit("-a attribute (sub name) needed.")
 
 	if base.supp:
-		sys.stdout = os.devnull
-		sys.stderr = os.devnull
+		null_out = open(os.devnull, 'w')
+		sys.stdout = null_out
+		# sys.stderr = null_out
 
 	url = "http://www.reddit.com/r/" + base.r
 
