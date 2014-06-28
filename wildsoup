@@ -50,12 +50,12 @@ def login(usrname, passwd):
 
 
 def getTitles(html, imgur=False):
-	if imgur == False:
-		soup = BeautifulSoup(html)
-		sAll = soup.findAll("a", {"class" : "title may-blank loggedin"})
-	else:
+	if imgur == True:
 		soup = BeautifulSoup(html)
 		sAll = soup.findAll('a', {'class' : 'zoom'})
+	else:
+		soup = BeautifulSoup(html)
+		sAll = soup.findAll("a", {"class" : "title may-blank loggedin"})
 
 	return sAll
 
